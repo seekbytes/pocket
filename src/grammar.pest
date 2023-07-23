@@ -1,0 +1,21 @@
+Program = _{ SOI ~ Expr ~ EOF }
+
+SET = @{UnaryOperator? ~ 'A'..'Z'| UnaryOperator? ~ 'a'..'z'}
+
+Expr = { UnaryExpr | BinaryExpr | Term }
+
+Term = _{ Int | SET | "(" ~ Expr ~ ")" }
+
+UnaryExpr = { UnaryOperator ~ Term }
+
+BinaryExpr = { Term ~ (Operator ~ Term)+ }
+
+UnaryOperator = { "~" | "-" }
+
+Operator = { "&" | "|" | "+" | "-" | "^" | "*"}
+
+Int = @{ UnaryOperator? ~ ASCII_DIGIT+ }
+
+WHITESPACE = _{ " " | "\t" }
+
+EOF = _{ EOI }
